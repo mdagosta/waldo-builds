@@ -1,0 +1,37 @@
+{
+  "kind": "waldito-merge",
+  "schema": 1,
+  "run": "smoke-v1",
+  "round": 0,
+  "stage": "bootstrap",
+  "identity": "mdagosta-b",
+  "method": "single",
+  "base": null,
+  "base_sha256": null,
+  "accepted": [
+    {
+      "unit": "all",
+      "identity": "mdagosta-b",
+      "model": "waldito-smoke-v1-r0000-all-mdagosta-b",
+      "model_sha256": "5901f01be224907364b49a2ec9d9319788a0df0ae69f7f06b135dbd15a9b0e4e"
+    }
+  ],
+  "dropped": [],
+  "model": "waldito-smoke-v1-r0000-merge",
+  "model_sha256": "5901f01be224907364b49a2ec9d9319788a0df0ae69f7f06b135dbd15a9b0e4e",
+  "files": {
+    "BOM.json": "50d9a0c911b9d1a618ef685456d34f3aef73387710fb45f2c5ddee0d3b2f3982",
+    "EU-BOM.json": "2d752632290ac31aee6cb030456dac97b8c073b8157e64b2abf79964d9c53314",
+    "README.md": "9ce1f43a61722ccba461005110767b998ece499212f17c874cf0a00774fb702f",
+    "architecture.py": "4ab702067e866ca668560bf94aeab2e5d19c9079eb1fde14456c6551b6a6c469",
+    "chat_template.jinja": "199bb752fb2d4346abab796528b1513fe40e6c9128a208dba9271a21ae73fb8b",
+    "config.json": "ce745337e2b6809bd8f8560234781820796ba4c37c303f8589d95ac3d9a0383c",
+    "generation_config.json": "7d0cb9f30bf9cc9b1721c17a0f83782cb3e0abf4321bd3723e27341364e738c1",
+    "model.safetensors": "5901f01be224907364b49a2ec9d9319788a0df0ae69f7f06b135dbd15a9b0e4e",
+    "special_tokens_map.json": "3f330b24e998993152a876811568d84ae615ebd9500d61dc8020a47af2b357c6",
+    "tokenization_openwaldo.py": "44145b9a453878ffd5f4db501e67e7fe7a996ba4e0fb479ac1a5b91ae6acf6c0",
+    "tokenizer_config.json": "735425ee405ef6b7e50da6445c8404506d6f7efecead31a6b0a9a11e23b15c8c"
+  },
+  "url": "huggingface://mdagosta/waldito-smoke-v1-r0000-merge@118b1b4b871bd20cfdc5116a4f12e07c8e634426",
+  "closed_at": "2026-09-30T03:15:00+00:00"
+}
