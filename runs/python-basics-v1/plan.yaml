@@ -1,5 +1,6 @@
-# Pretraining of waldito-python-basics (2026-09-29 build), recreated on the network: same model,
-# data shards, and round sizes. Post-training comes later as a plan continuing from this run's merge.
+# waldito-python-basics (2026-09-29 build), recreated on the network: same model, data shards,
+# and round sizes. Rounds 1-4 pretrain; round 4's merge.yaml pins the pretrained base for anyone
+# who wants to post-train it their own way. Rounds 5-14 post-train it here.
 name: python-basics-v1
 units: [u0, u1, u2]
 replicas: 2
@@ -22,6 +23,14 @@ pretrain:
     u0: [TheAlgorithms/Python]
     u1: [pallets/flask, httpie/cli]
     u2: [nvbn/thefuck, psf/requests]
+
+posttrain:
+  compose: sft.yaml.tmpl       # same architecture; conversation template, assistant-only loss
+  data: ~/src/openwaldo/post-training-data/data/sft/python-basics-v4/train/part-00000.jsonl
+  shard_by: record-hash        # one shard per unit, ingested locally by each identity
+  fetcher: ~/.waldo/waldito/fetchers/python-basics-v4.ini
+  rounds: 10                   # ~2250 steps per unit, matching the single model's 2206 (371/374)
+  epochs_per_round: 8          # ~230 steps on a third of python-basics-v4
 
 min_steps_per_round: 200       # 72 steps failed, ~200+ worked
 replica_tolerance: 0.25
