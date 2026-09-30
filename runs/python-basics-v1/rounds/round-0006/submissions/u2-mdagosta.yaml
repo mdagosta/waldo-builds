@@ -1,0 +1,30 @@
+{
+  "kind": "waldito-submission",
+  "schema": 1,
+  "run": "python-basics-v1",
+  "round": 6,
+  "stage": "posttrain",
+  "unit": "u2",
+  "identity": "mdagosta",
+  "base": "waldito-python-basics-v1-r0005-merge",
+  "base_sha256": "53e3f97bf5f22705e48ec5a9e9600d597cc1590681920e5a01df29cfb37358fd",
+  "model": "waldito-python-basics-v1-r0006-u2-mdagosta",
+  "model_sha256": "59e8fe58a2a0a2de234f5401d35181f99c50586dec8c6f7aafabd54e2fe01f92",
+  "bom_sha256": "a7908e86e8fc9b5a5f6b861e0605ac228fa9e33092a3b15e344730d2d42a38f6",
+  "files": {
+    "BOM.json": "a7908e86e8fc9b5a5f6b861e0605ac228fa9e33092a3b15e344730d2d42a38f6",
+    "EU-BOM.json": "3a9449d5863b8df20fde1e39b35d4e88c0bf4fa4bae26bd09311c00f36f1b90e",
+    "README.md": "9ce1f43a61722ccba461005110767b998ece499212f17c874cf0a00774fb702f",
+    "architecture.py": "4ab702067e866ca668560bf94aeab2e5d19c9079eb1fde14456c6551b6a6c469",
+    "chat_template.jinja": "199bb752fb2d4346abab796528b1513fe40e6c9128a208dba9271a21ae73fb8b",
+    "config.json": "db372b028c817371b962ad1ce5e9c8ad2d1c0783207c620ba6ae1e43d83cce8f",
+    "generation_config.json": "7d0cb9f30bf9cc9b1721c17a0f83782cb3e0abf4321bd3723e27341364e738c1",
+    "model.safetensors": "59e8fe58a2a0a2de234f5401d35181f99c50586dec8c6f7aafabd54e2fe01f92",
+    "special_tokens_map.json": "3f330b24e998993152a876811568d84ae615ebd9500d61dc8020a47af2b357c6",
+    "tokenization_openwaldo.py": "44145b9a453878ffd5f4db501e67e7fe7a996ba4e0fb479ac1a5b91ae6acf6c0",
+    "tokenizer_config.json": "735425ee405ef6b7e50da6445c8404506d6f7efecead31a6b0a9a11e23b15c8c"
+  },
+  "tokens": 453672,
+  "url": "huggingface://mdagosta/waldito-python-basics-v1-r0006-u2-mdagosta@384bb157c11995ca9b265d0754779d71a875b8c5",
+  "created_at": "2026-09-30T19:16:44+00:00"
+}
