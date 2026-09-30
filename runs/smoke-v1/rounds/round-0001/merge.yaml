@@ -4,7 +4,7 @@
   "run": "smoke-v1",
   "round": 1,
   "stage": "pretrain",
-  "identity": "mdagosta",
+  "identity": "mdagosta-b",
   "method": "single",
   "base": "waldito-smoke-v1-r0000-merge",
   "base_sha256": "5901f01be224907364b49a2ec9d9319788a0df0ae69f7f06b135dbd15a9b0e4e",
@@ -42,5 +42,5 @@
     "tokenizer_config.json": "735425ee405ef6b7e50da6445c8404506d6f7efecead31a6b0a9a11e23b15c8c"
   },
   "url": "huggingface://mdagosta/waldito-smoke-v1-r0001-merge@45be95bffe794a83e7b37308af06e4b504ed96fd",
-  "closed_at": "2026-09-30T03:28:02+00:00"
+  "closed_at": "2026-09-30T03:29:41+00:00"
 }
