@@ -1,0 +1,50 @@
+{
+  "kind": "waldito-merge",
+  "schema": 1,
+  "run": "python-basics-v1",
+  "round": 2,
+  "stage": "pretrain",
+  "identity": "mdagosta-b",
+  "method": "token-weighted-mean",
+  "base": "waldito-python-basics-v1-r0001-merge",
+  "base_sha256": "a16f7d0a52a3f86c474b0d9a135418eb0ea3fddf83c8bb4eed791e45928f0119",
+  "accepted": [
+    {
+      "unit": "u0",
+      "identity": "mdagosta-b",
+      "model": "waldito-python-basics-v1-r0002-u0-mdagosta-b",
+      "model_sha256": "3e8911ac8f748170b7218f8da7b498b5c03597bc01da12284b98530f1161b080",
+      "tokens": 8192000
+    },
+    {
+      "unit": "u1",
+      "identity": "mdagosta-b",
+      "model": "waldito-python-basics-v1-r0002-u1-mdagosta-b",
+      "model_sha256": "535ddd936689080bf384177043abf6c0b82b42d1ad494d21a2285f874fdd173c",
+      "tokens": 8192000
+    },
+    {
+      "unit": "u2",
+      "identity": "mdagosta-b",
+      "model": "waldito-python-basics-v1-r0002-u2-mdagosta-b",
+      "model_sha256": "f39db88627997366f30130957255d2d1e3df776a688cb27218795be0e2ea50b3",
+      "tokens": 8192000
+    }
+  ],
+  "dropped": [],
+  "model": "waldito-python-basics-v1-r0002-merge",
+  "model_sha256": "1fd9c777d966368f7d0e369611ed1b093a4fbf9a8df2ef4a2638ad481bfb9623",
+  "files": {
+    "BOM.json": "e51ce7c9e91bd8dd033c9ba9a3b84637bc60085d18328be4c714b345c84e0667",
+    "architecture.py": "4ab702067e866ca668560bf94aeab2e5d19c9079eb1fde14456c6551b6a6c469",
+    "chat_template.jinja": "199bb752fb2d4346abab796528b1513fe40e6c9128a208dba9271a21ae73fb8b",
+    "config.json": "db372b028c817371b962ad1ce5e9c8ad2d1c0783207c620ba6ae1e43d83cce8f",
+    "generation_config.json": "7d0cb9f30bf9cc9b1721c17a0f83782cb3e0abf4321bd3723e27341364e738c1",
+    "model.safetensors": "1fd9c777d966368f7d0e369611ed1b093a4fbf9a8df2ef4a2638ad481bfb9623",
+    "special_tokens_map.json": "3f330b24e998993152a876811568d84ae615ebd9500d61dc8020a47af2b357c6",
+    "tokenization_openwaldo.py": "44145b9a453878ffd5f4db501e67e7fe7a996ba4e0fb479ac1a5b91ae6acf6c0",
+    "tokenizer_config.json": "735425ee405ef6b7e50da6445c8404506d6f7efecead31a6b0a9a11e23b15c8c"
+  },
+  "url": "huggingface://mdagosta/waldito-python-basics-v1-r0002-merge@56c8a889615048c7065f932a55efd714cc9eb22f",
+  "closed_at": "2026-09-30T17:35:32+00:00"
+}
