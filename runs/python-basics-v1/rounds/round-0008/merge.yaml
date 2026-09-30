@@ -4,7 +4,7 @@
   "run": "python-basics-v1",
   "round": 8,
   "stage": "posttrain",
-  "identity": "mdagosta-b",
+  "identity": "mdagosta",
   "method": "single",
   "base": "waldito-python-basics-v1-r0007-merge",
   "base_sha256": "474cc97ce1ab3b28df6ac93d3b4b0371f198b480bb20e937c9944f1a81ee42cf",
@@ -51,5 +51,5 @@
     "tokenizer_config.json": "735425ee405ef6b7e50da6445c8404506d6f7efecead31a6b0a9a11e23b15c8c"
   },
   "url": "huggingface://mdagosta/waldito-python-basics-v1-r0008-merge@f171558f07f365f38c3e5f2c58b73bf5f23ed945",
-  "closed_at": "2026-09-30T19:34:40+00:00"
+  "closed_at": "2026-09-30T19:35:20+00:00"
 }
