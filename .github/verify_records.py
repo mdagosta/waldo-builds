@@ -116,7 +116,7 @@ def problems(number, repository):
             continue
         identity = str(record.get("identity"))
         key = key_of((plan.get("identities") or {}).get(identity))
-        rounds = 1 + int(plan["pretrain"]["rounds"]) + int(plan["posttrain"]["rounds"])
+        rounds = 1 + int(plan["pretrain"]["rounds"]) + int((plan.get("posttrain") or {}).get("rounds", 0))
         units = ["all"] if number_in_path == 0 else [str(unit) for unit in plan["units"]]
         if not key:
             found.append(f"{name}: {identity} is not in {plan_path}'s identities")
