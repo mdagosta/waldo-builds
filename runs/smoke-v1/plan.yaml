@@ -1,0 +1,33 @@
+# Testbed smoke run: the e2e test's tiny plan on GitHub and Hugging Face, two identities on one account.
+name: smoke-v1
+units: [u0, u1]
+replicas: 2
+merge: mean
+store: huggingface          # each identity uploads to its own Hugging Face account
+identities:
+  mdagosta:
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHrTASJTB93+iPk08jk+9LIfNCBzFKQ5aqN0aQeizxii
+    hf: mdagosta
+  mdagosta-b:
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFTcqwpObmnREvS0Bf7MOPBp5tEmcELDjH4RjgEgv5N3
+    hf: mdagosta
+tamper: {round: 1, unit: u1, identity: mdagosta-b, kind: lazy}   # demo: one free-rider, which the round must drop
+
+pretrain:
+  compose: pretrain.yaml.tmpl
+  bootstrap_tokens: 2000000
+  rounds: 1
+  tokens_per_round: 4000000  # ~244 steps; 61 made the round worse, so honest replicas looked like disagreement
+  shards:
+    u0: [TheAlgorithms/Python]
+    u1: [pallets/flask, httpie/cli]
+
+posttrain:
+  compose: sft.yaml.tmpl
+  data: ~/src/openwaldo/post-training-data/data/sft/python-basics-v4/train/part-00000.jsonl
+  shard_by: record-hash
+  fetcher: ~/.waldo/waldito/fetchers/python-basics-v4.ini
+  rounds: 1
+  epochs_per_round: 1
+
+replica_tolerance: 0.25

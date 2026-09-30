@@ -1,0 +1,18 @@
+# Stateless verifier for `waldito join` records: merges record-only pull requests whose
+# signatures check out, closes bad ones, and leaves every other pull request for review.
+name: records
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      # pull_request_target checks out main: the verifier and plans are never the PR's own.
+      - uses: actions/checkout@v4
+      - run: python3 .github/verify_records.py "${{ github.event.pull_request.number }}"
+        env:
+          GH_TOKEN: ${{ github.token }}
