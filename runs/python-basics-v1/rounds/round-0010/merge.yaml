@@ -4,7 +4,7 @@
   "run": "python-basics-v1",
   "round": 10,
   "stage": "posttrain",
-  "identity": "mdagosta-b",
+  "identity": "mdagosta",
   "method": "token-weighted-mean",
   "base": "waldito-python-basics-v1-r0009-merge",
   "base_sha256": "2a3d3b7af008633e700e6b5049186192697d07b331bd809a4336655ac6f13453",
@@ -37,7 +37,7 @@
   "model": "waldito-python-basics-v1-r0010-merge",
   "model_sha256": "761644ccd63e5777684dbf1feb01f610a24d8adb35b972046a8fa6f58bc5754d",
   "files": {
-    "BOM.json": "57f7d55fbe6a8ec2a0933e037da7c92bc7368b15b71e38aa764411e34e010532",
+    "BOM.json": "56058794a6dc0eebfa39228806add8bb14522ad1bfec49044cad519e110bb102",
     "architecture.py": "4ab702067e866ca668560bf94aeab2e5d19c9079eb1fde14456c6551b6a6c469",
     "chat_template.jinja": "199bb752fb2d4346abab796528b1513fe40e6c9128a208dba9271a21ae73fb8b",
     "config.json": "db372b028c817371b962ad1ce5e9c8ad2d1c0783207c620ba6ae1e43d83cce8f",
@@ -47,6 +47,6 @@
     "tokenization_openwaldo.py": "44145b9a453878ffd5f4db501e67e7fe7a996ba4e0fb479ac1a5b91ae6acf6c0",
     "tokenizer_config.json": "735425ee405ef6b7e50da6445c8404506d6f7efecead31a6b0a9a11e23b15c8c"
   },
-  "url": "huggingface://mdagosta/waldito-python-basics-v1-r0010-merge@38f8741c6bb8596d871cba122b3702c02a403125",
-  "closed_at": "2026-09-30T19:51:07+00:00"
+  "url": "huggingface://mdagosta/waldito-python-basics-v1-r0010-merge@900343d3b0413c15164f239d094c9d2936f72303",
+  "closed_at": "2026-09-30T19:51:44+00:00"
 }
