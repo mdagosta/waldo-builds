@@ -1,0 +1,19 @@
+# Playtest: an outside contributor (mdagosta-bot, no write access) records a
+# bootstrap unit and its merge through fork pull requests with a fine-grained token.
+name: bot-test-v1
+units: [u0]
+replicas: 1
+merge: mean
+store: huggingface
+identities:
+  mdagosta-bot:
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFJyifP4+lkkqYkmgmfO9hEvAZb4yybXjgZlYKlsj1VG
+    hf: mdagosta
+
+pretrain:
+  compose: pretrain.yaml.tmpl
+  bootstrap_tokens: 2000000
+  rounds: 0
+  tokens_per_round: 4000000
+  shards:
+    u0: [TheAlgorithms/Python]
