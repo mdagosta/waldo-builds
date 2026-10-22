@@ -1,0 +1,45 @@
+# Burn-in: 24 hours of five identities at throttle 0.05 on Python repos, with random protocol
+# faults injected by burnin.py: lazy, copied, and stale-base submissions, silent claims, dishonest
+# merges, forged and future-dated claims. The honest majority must keep every round correct;
+# `burnin.py report runs/bot-test-v4` checks each fault's outcome. Rounds is an upper bound: the
+# run is stopped after 24 hours, and every round decided by then stands.
+kind: waldo-join-plan
+schema: 1
+name: bot-test-v4
+units: [u0, u1, u2, u3, u4]
+replicas: 3
+closers: 3
+claim_minutes: 120             # above a unit's training time at throttle 0.05; silent claims cost this much
+merge: mean
+store: huggingface
+identities:
+  mdagosta-bot-1:
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFJyifP4+lkkqYkmgmfO9hEvAZb4yybXjgZlYKlsj1VG
+    hf: mdagosta
+  mdagosta-bot-2:
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFTcqwpObmnREvS0Bf7MOPBp5tEmcELDjH4RjgEgv5N3
+    hf: mdagosta
+  mdagosta-bot-3:
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILhHiQQELpu9eaeVegNKMAhBRIXG/ZPdn8yTht6wf6Oa
+    hf: mdagosta
+  mdagosta-bot-4:
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHa4dZzvVUHu2529Ja/+2Mmqw1Fuw7PggT3vZ8adIO+3
+    hf: mdagosta
+  mdagosta-bot-5:
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFsOoB1ho74I0z/s+RgCZMiVoSTbIvMyG9wAgG4EhxnO
+    hf: mdagosta
+
+pretrain:
+  compose: pretrain.yaml.tmpl  # python-basics-v1's model: 384 hidden, 6 layers, byte tokenizer, batch 32 x 512
+  bootstrap_tokens: 4000000
+  rounds: 40
+  tokens_per_round: 8192000    # 500 steps per unit
+  shards:
+    u0: [TheAlgorithms/Python]
+    u1: [pallets/flask, httpie/cli, psf/requests]
+    u2: [nvbn/thefuck, sherlock-project/sherlock, microsoft/markitdown]
+    u3: [fastapi/fastapi, scrapy/scrapy]
+    u4: [Aider-AI/aider, 3b1b/manim]
+
+min_steps_per_round: 200
+replica_tolerance: 0.25
