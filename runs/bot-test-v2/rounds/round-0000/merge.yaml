@@ -1,0 +1,71 @@
+{
+  "kind": "waldo-join-merge",
+  "schema": 1,
+  "run": "bot-test-v2",
+  "round": 0,
+  "stage": "bootstrap",
+  "identity": "mdagosta-bot-5",
+  "method": "single",
+  "base": null,
+  "base_sha256": null,
+  "accepted": [
+    {
+      "unit": "all",
+      "identity": "mdagosta-bot-1",
+      "model": "waldo-bot-test-v2-r0000-all-mdagosta-bot-1",
+      "model_sha256": "e2f159d81454dd3d107adabcb60011843e1604b138f6a0ce662cf7c0fea68699",
+      "tokens": 2015232
+    }
+  ],
+  "dropped": [],
+  "evidence": [
+    {
+      "unit": "all",
+      "start_loss": 5.556828061699537,
+      "evaluation_set_sha256": "938a4f0b4ccc10ff82766a8e8e4f6f41604ce9e2e3b72a205813ec7389a0026d",
+      "replicas": [
+        {
+          "identity": "mdagosta-bot-1",
+          "model_sha256": "e2f159d81454dd3d107adabcb60011843e1604b138f6a0ce662cf7c0fea68699",
+          "heldout_loss": 4.57544943982444
+        },
+        {
+          "identity": "mdagosta-bot-2",
+          "model_sha256": "872913c8f7f50be595d7af258178c8e5129687a34c7edb3db49ffd24925a273f",
+          "heldout_loss": 4.575450017325017
+        },
+        {
+          "identity": "mdagosta-bot-3",
+          "model_sha256": "23955fc4e20e32a626c9ed16c2681865649115a606a2b79dacf8a18bea03a577",
+          "heldout_loss": 4.575632796257796
+        },
+        {
+          "identity": "mdagosta-bot-5",
+          "model_sha256": "b4f00f8c1cd6534975f809cffd34b8feb57561238b65a95311feec51fed969cf",
+          "heldout_loss": 4.575324266574267
+        }
+      ]
+    }
+  ],
+  "model": "waldo-bot-test-v2-r0000-merge-0e30f32cb74e",
+  "model_sha256": "e2f159d81454dd3d107adabcb60011843e1604b138f6a0ce662cf7c0fea68699",
+  "files": {
+    "ATTRIBUTION.md": "83d25fc78fcc954bc6d6b09d884d08e5bbfd0070598668f711abdf9891713f2b",
+    "BOM.json": "0b7baad554dacaeb3b5ee7aca958ba83bcfe622d2c3f8cf77dda25b6cb5a27f4",
+    "EU-BOM.json": "e55bd46fca1befce41f5752c49ca9c5749e1a72df736a394d0bfb5bd32db81d8",
+    "README.md": "260176c16f569f3e86f6b9bb919479a2a8f3eb75e55e81b392e18b5f737db293",
+    "TRAINING-CLOSURE.json": "2a3f9f3116ef5235d49012648d27ac1ee01f5494dcaff62de77211d12c034c1c",
+    "architecture.py": "4ab702067e866ca668560bf94aeab2e5d19c9079eb1fde14456c6551b6a6c469",
+    "chat_template.jinja": "199bb752fb2d4346abab796528b1513fe40e6c9128a208dba9271a21ae73fb8b",
+    "config.json": "ce745337e2b6809bd8f8560234781820796ba4c37c303f8589d95ac3d9a0383c",
+    "generation_config.json": "7d0cb9f30bf9cc9b1721c17a0f83782cb3e0abf4321bd3723e27341364e738c1",
+    "model.safetensors": "e2f159d81454dd3d107adabcb60011843e1604b138f6a0ce662cf7c0fea68699",
+    "openwaldo_tokenizer.json": "ff11d18d469b1eaee3389da773e6cd9084c278fa61ae7ee49b5c5a99670d5fe0",
+    "provenance-94a673f04e829992f44f7f3f7a7d0eb46aad4eb1bf2a9fce7767923e97160911.json": "477696c8f999e3e7bd7bec088a2ccec7cf588efe829c43c7675d5fa9db31756a",
+    "special_tokens_map.json": "3f330b24e998993152a876811568d84ae615ebd9500d61dc8020a47af2b357c6",
+    "tokenization_openwaldo.py": "7cc1e68b4fa4c92de105f88adfbd44f9742379ace79ca26a5ea76311b2544fa1",
+    "tokenizer_config.json": "b2dadb8f686c8881223ebca1004cbcc805e78369ed988be6d8fd5a0418be49ac"
+  },
+  "url": "huggingface://mdagosta/waldo-bot-test-v2-r0000-merge-0e30f32cb74e@1ca143346379fab578760c280ce4caed59addbaa",
+  "closed_at": "2026-10-22T18:59:57+00:00"
+}
