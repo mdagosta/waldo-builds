@@ -36,15 +36,15 @@ was built.
    `uv run --with mlx --with huggingface_hub ./waldo model join ...`
 2. Make a GitHub machine account and its two tokens (below). Fork this repo as that account.
 3. Run `waldo model join` once with `--identity <you>`. It creates a signing key in
-   `~/.waldo/identity/<you>/` and prints the `identities` entry to add.
+   `~/.waldo/join/<you>/` and prints the `identities` entry to add.
 4. Open a pull request adding that entry, with your Hugging Face user as `hf`, to the run's
    `plan.yaml`. Plan changes are reviewed by the run's organizer (see `CODEOWNERS`), never merged
    automatically.
 5. Run join for real, with the machine account's noreply address as the commit author:
    `waldo model join <repo> runs/<name> --identity <you> --email <id>+<account>@users.noreply.github.com`
 
-Work goes to `~/.waldo/join/<you>/` (clone, models, exports) and credentials stay in
-`~/.waldo/identity/<you>/`, so several identities can share one machine.
+Everything of an identity lives in `~/.waldo/join/<you>/`: its signing key, GitHub token, clone,
+models, and exports, so several identities can share one machine.
 
 ## Accounts and tokens
 
@@ -66,7 +66,7 @@ account instead. GitHub allows one free machine account per person.
    comfortable renewing.
 4. Save it for your identity, readable only by you (join refuses a token file others can read):
    ```
-   umask 077; read -rs -p "token: " t; printf %s "$t" > ~/.waldo/identity/<you>/github-token; unset t
+   umask 077; read -rs -p "token: " t; printf %s "$t" > ~/.waldo/join/<you>/github-token; unset t
    ```
    Join hands it only to its own `gh` and `git` calls, so your personal `gh` login is untouched.
 
