@@ -1,4 +1,4 @@
-# Stateless verifier for `waldito join` records: merges record-only pull requests whose
+# Stateless verifier for `waldo model join` records: merges record-only pull requests whose
 # signatures check out, closes bad ones, and leaves every other pull request for review.
 name: records
 on:

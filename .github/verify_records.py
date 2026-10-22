@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Stateless verifier for record pull requests from `waldito join`.
+Stateless verifier for record pull requests from `waldo model join`.
 
 Merges a pull request only if it adds nothing but signed records under an existing run's rounds/,
 each record matches the file it is in, and its signature verifies against the run plan's key.
@@ -17,12 +17,12 @@ import subprocess
 import sys
 import tempfile
 
-SIGNING_NAMESPACE = "waldito"
+SIGNING_NAMESPACE = "waldo-join"
 RECORD = re.compile(r"^runs/([^/]+)/rounds/round-(\d{4})/(merge\.yaml|submissions/([^/]+)\.yaml)(\.sig)?$")
 
 
 def parse_scalar(text):
-    """Same YAML subset as waldito's parse_plan, so plans read the same here and in join."""
+    """The small YAML subset plans use: scalars, flow lists and maps, and nested blocks."""
     text = text.strip()
     if text.startswith("[") and text.endswith("]"):
         return [parse_scalar(item) for item in text[1:-1].split(",") if item.strip()]
