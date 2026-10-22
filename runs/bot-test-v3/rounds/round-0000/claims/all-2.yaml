@@ -1,0 +1,11 @@
+{
+  "kind": "waldo-join-claim",
+  "schema": 1,
+  "run": "bot-test-v3",
+  "round": 0,
+  "stage": "bootstrap",
+  "slot": "all-2",
+  "attempt": 1,
+  "identity": "mdagosta-bot-3",
+  "created_at": "2026-10-22T21:44:49+00:00"
+}
