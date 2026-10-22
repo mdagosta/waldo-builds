@@ -11,17 +11,22 @@ identities allowed to contribute. Contributors run `waldo model join` from
 waldo model join https://github.com/mdagosta/waldo-builds runs/<name> --identity <you>
 ```
 
-Each pass trains, verifies, or merges one unit, uploads the weights to the contributor's own
-Hugging Face account, and opens a pull request adding a signed record under `rounds/`:
+Each pass claims a slot, then trains a unit or closes a round, uploads the weights to the
+contributor's own Hugging Face account, and opens a pull request adding a signed record under
+`rounds/`:
 
+- A claim reserves a replica of a unit, or a closing slot, before the work, so contributors
+  divide a round instead of repeating each other. A claim not followed by its record within the
+  plan's `claim_minutes` may be retaken.
 - A submission records the unit's weights by hash and their lineage back to the round's start.
 - A merge records the units it accepted, the ones it dropped and why, and the evidence behind each
   verdict: every replica's held-out loss, measured by the closer on the exact records that unit's
-  training held out.
+  training held out. Several closers (`closers`, default 3) merge each round independently, and
+  the round goes to the merge a majority of them sign, so no one closer is trusted.
 - Merged weights are a waldo merge whose records pin every parent, and their lineage travels with
   each published release, so any model built here traces back to the data it was trained on.
 
-The `records` Action merges record pull requests whose signatures check out and closes the rest;
+The `records` Action merges record pull requests whose signatures and claims check out and closes the rest;
 it never runs code from a pull request. The history of `main` is the record of how each model
 was built.
 

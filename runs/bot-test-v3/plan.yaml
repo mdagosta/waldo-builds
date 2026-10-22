@@ -1,11 +1,13 @@
-# Playtest: the majority vote. Three replicas per unit; in round 1 one identity submits the
-# round's starting weights for u1 without training. The closer must reject that replica,
-# accept u1 on the other two, and record the evidence for both units.
+# Playtest: the majority votes. Three replicas per unit; in round 1 one identity submits the
+# round's starting weights for u1 without training, and another closes the round accepting it.
+# The honest closers must reject that replica, accept u1 on the other two, record the evidence
+# for both units, and outvote the dishonest closer.
 kind: waldo-join-plan
 schema: 1
 name: bot-test-v3
 units: [u0, u1]
 replicas: 3
+closers: 3
 merge: mean
 store: huggingface
 identities:
