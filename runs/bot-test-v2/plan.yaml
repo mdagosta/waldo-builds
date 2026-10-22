@@ -1,0 +1,37 @@
+# Playtest: real distribution. Five identities on one machine-account join concurrently;
+# two units x two replicas gives each round four slots, so the work is actually divided,
+# slot races and the round's close are contended, and one identity has nothing to do.
+kind: waldo-join-plan
+schema: 1
+name: bot-test-v2
+units: [u0, u1]
+replicas: 2
+merge: mean
+store: huggingface
+identities:
+  mdagosta-bot-1:
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFJyifP4+lkkqYkmgmfO9hEvAZb4yybXjgZlYKlsj1VG
+    hf: mdagosta
+  mdagosta-bot-2:
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFTcqwpObmnREvS0Bf7MOPBp5tEmcELDjH4RjgEgv5N3
+    hf: mdagosta
+  mdagosta-bot-3:
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILhHiQQELpu9eaeVegNKMAhBRIXG/ZPdn8yTht6wf6Oa
+    hf: mdagosta
+  mdagosta-bot-4:
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHa4dZzvVUHu2529Ja/+2Mmqw1Fuw7PggT3vZ8adIO+3
+    hf: mdagosta
+  mdagosta-bot-5:
+    key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFsOoB1ho74I0z/s+RgCZMiVoSTbIvMyG9wAgG4EhxnO
+    hf: mdagosta
+
+pretrain:
+  compose: pretrain.yaml.tmpl
+  bootstrap_tokens: 2000000
+  rounds: 1
+  tokens_per_round: 4000000
+  shards:
+    u0: [TheAlgorithms/Python]
+    u1: [pallets/flask, httpie/cli]
+
+replica_tolerance: 0.25

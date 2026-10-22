@@ -66,9 +66,12 @@ account instead. GitHub allows one free machine account per person.
    comfortable renewing.
 4. Save it for your identity, readable only by you (join refuses a token file others can read):
    ```
+   mkdir -p ~/.waldo/join/<you> && chmod 700 ~/.waldo/join/<you>
    umask 077; read -rs -p "token: " t; printf %s "$t" > ~/.waldo/join/<you>/github-token; unset t
    ```
-   Join hands it only to its own `gh` and `git` calls, so your personal `gh` login is untouched.
+   Join refuses a token file that is a symlink, readable by others, or in a directory others can
+   read, and hands it only to its own `gh` and `git` calls, so your personal `gh` login is
+   untouched. Several identities on one account each need their own copy.
 
 Records then land on the machine account's contribution graph, not yours: it opens the pull
 requests and authors the record commits, and this repo's Action merges them.
