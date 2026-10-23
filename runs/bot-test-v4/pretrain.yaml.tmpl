@@ -1,4 +1,3 @@
-# waldito build template: a waldo compose with $$placeholders waldito fills per piece of work.
 kind: waldo-model-compose
 schema: 1
 $base_block
@@ -8,10 +7,10 @@ architecture:
   family: decoder-transformer
   context_tokens: 512
   vocabulary_size: 259
-  hidden_size: 384
-  intermediate_size: 1024
-  layers: 6
-  attention_heads: 6
+  hidden_size: 128
+  intermediate_size: 384
+  layers: 4
+  attention_heads: 4
   key_value_heads: 2
   tie_embeddings: true
   parameter_dtype: bfloat16
@@ -36,7 +35,6 @@ stages:
       sequence_length: 512
       learning_rate: 0.0006
       seed: $seed
-      # Covers the whole filtered selection, so each seed is a fresh random sample.
       shuffle_buffer_records: 1000000
       shuffle_buffer_bytes: 4294967296
 $extra

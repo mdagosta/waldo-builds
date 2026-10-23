@@ -1,15 +1,14 @@
-# Burn-in: 24 hours of five identities at throttle 0.05 on Python repos, with random protocol
-# faults injected by burnin.py: lazy, copied, and stale-base submissions, silent claims, dishonest
-# merges, forged and future-dated claims. The honest majority must keep every round correct;
-# `burnin.py report runs/bot-test-v4` checks each fault's outcome. Rounds is an upper bound: the
-# run is stopped after 24 hours, and every round decided by then stands.
+# Burn-in: about 40 minutes of five identities at throttle 0.2 with random protocol faults
+# injected by waldo's testing/join/burnin.py (FAULT_RATE=0.3): lazy, copied, and stale-base
+# submissions, silent claims, dishonest merges, forged and future-dated claims. The honest
+# majority must keep every round correct; `burnin.py report runs/bot-test-v4` checks each fault.
 kind: waldo-join-plan
 schema: 1
 name: bot-test-v4
-units: [u0, u1, u2, u3, u4]
+units: [u0, u1, u2]
 replicas: 3
 closers: 3
-claim_minutes: 120             # above a unit's training time at throttle 0.05; silent claims cost this much
+claim_minutes: 10              # silent claims are retaken within the run
 merge: mean
 store: huggingface
 identities:
@@ -30,16 +29,13 @@ identities:
     hf: mdagosta
 
 pretrain:
-  compose: pretrain.yaml.tmpl  # python-basics-v1's model: 384 hidden, 6 layers, byte tokenizer, batch 32 x 512
-  bootstrap_tokens: 4000000
-  rounds: 40
-  tokens_per_round: 8192000    # 500 steps per unit
+  compose: pretrain.yaml.tmpl  # bot-test-v3's tiny model: 128 hidden, 4 layers, byte tokenizer
+  bootstrap_tokens: 2000000
+  rounds: 3
+  tokens_per_round: 4000000    # about 250 steps per unit
   shards:
     u0: [TheAlgorithms/Python]
     u1: [pallets/flask, httpie/cli, psf/requests]
     u2: [nvbn/thefuck, sherlock-project/sherlock, microsoft/markitdown]
-    u3: [fastapi/fastapi, scrapy/scrapy]
-    u4: [Aider-AI/aider, 3b1b/manim]
 
-min_steps_per_round: 200
 replica_tolerance: 0.25

@@ -26,6 +26,22 @@ RECORD = re.compile(r"^runs/([^/]+)/rounds/round-(\d{4})/(claims|merges|submissi
 CLAIM_FILE = re.compile(r"^(.+)-([1-9]\d*)(?:\.([2-9]|[1-9]\d+))?$")
 # A claim dated ahead of this clock would hold its slot past claim_minutes.
 CLOCK_SKEW = datetime.timedelta(minutes=2)
+# As join reads records: anything it would ignore must not land, or it would hold a slot join cannot see.
+KINDS = {"claims": "waldo-join-claim", "submissions": "waldo-join-submission", "merges": "waldo-join-merge"}
+MODEL_NAME = re.compile(r"[a-z0-9][a-z0-9._-]{0,63}")
+RFC3339 = re.compile(r"\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?(Z|[+-]\d\d:\d\d)")
+
+
+def stage_of(plan, number):
+    pretrain = int(plan["pretrain"]["rounds"])
+    return "bootstrap" if number == 0 else "pretrain" if number <= pretrain else "posttrain"
+
+
+def timestamp(value):
+    """An RFC 3339 time as join parses it, or None."""
+    if not RFC3339.fullmatch(str(value)):
+        return None
+    return datetime.datetime.fromisoformat(str(value).replace("Z", "+00:00"))
 
 
 def parse_scalar(text):
@@ -129,6 +145,9 @@ def problems(number, repository):
             continue
         if record.get("run") != plan["name"] or record.get("round") != number_in_path or number_in_path >= rounds:
             found.append(f"{name}: run or round does not match its path and plan")
+            continue
+        if record.get("kind") != KINDS[kind] or record.get("schema") != 1 or record.get("stage") != stage_of(plan, number_in_path):
+            found.append(f"{name}: kind, schema, or stage is not {KINDS[kind]}, 1, {stage_of(plan, number_in_path)}")
         if kind == "claims":
             found += claim_problems(name, record, stem, plan, units, round_dir)
         else:
@@ -137,8 +156,23 @@ def problems(number, repository):
                 found.append(f"{name}: unit or identity does not match its file name and plan")
             if kind == "merges" and stem != identity:
                 found.append(f"{name}: identity does not match its file name")
-            if not any(slot_unit(held) == unit for held in held_slots(round_dir, identity)):
+            if kind == "merges":
+                closed = timestamp(record.get("closed_at"))
+                if closed is None or closed > datetime.datetime.now(datetime.timezone.utc) + CLOCK_SKEW:
+                    found.append(f"{name}: closed_at is not an RFC 3339 time at or before the verifier's clock")
+                accepted = record.get("accepted")
+                if not isinstance(accepted, list) or not all(isinstance(a, dict) and a.get("unit") in units and
+                                                                MODEL_NAME.fullmatch(str(a.get("model"))) for a in accepted):
+                    found.append(f"{name}: accepted units must be the round's units with plain model names")
+            if not MODEL_NAME.fullmatch(str(record.get("model"))):
+                found.append(f"{name}: model is not a plain model name")
+            held = [slot for slot in held_slots(round_dir, identity) if slot_unit(slot) == unit]
+            if not held:
                 found.append(f"{name}: {identity} holds no claim on {unit} on main")
+            elif kind == "submissions" and any(other != identity and (round_dir / "submissions" / f"{unit}-{other}.yaml").exists()
+                                               for other in holders_of(round_dir, held[0])):
+                # A slot is filled once: a late record from an expired holder would change what closers judge.
+                found.append(f"{name}: {held[0]} was already filled by the identity that retook it")
             found += published_problems(name, record)
         signature = subprocess.run(["git", "show", f"FETCH_HEAD:{name}.sig"], stdout=subprocess.PIPE, check=True).stdout
         with tempfile.TemporaryDirectory() as scratch:
@@ -195,6 +229,13 @@ def filled(round_dir, slot, holders):
                (round_dir / "submissions" / f"{unit}-{holder}.yaml").exists() for holder in holders)
 
 
+def full(round_dir, unit, replicas):
+    """Whether unit has a submission from the holder of each of its replica slots on main."""
+    holders = {claim.get("identity") for claim in map(read_json, sorted((round_dir / "claims").glob("*.yaml")))
+               if str(claim.get("slot", "")).rsplit("-", 1)[0] == unit}
+    return sum((round_dir / "submissions" / f"{unit}-{holder}.yaml").exists() for holder in holders) >= replicas
+
+
 def claim_problems(name, record, stem, plan, units, round_dir):
     found = []
     match = CLAIM_FILE.match(stem)
@@ -204,6 +245,8 @@ def claim_problems(name, record, stem, plan, units, round_dir):
     unit, position = match.group(1), int(match.group(2))
     if unit != "close" and (unit not in units or position > int(plan.get("replicas", 1))):
         found.append(f"{name}: {slot} is not a slot of this round")
+    if unit == "close" and not plan.get("round_minutes") and not all(full(round_dir, u, int(plan.get("replicas", 1))) for u in units):
+        found.append(f"{name}: closing slots open once every unit has its replicas")
     identities = len(plan.get("identities") or {})
     closers = min(int(plan.get("closers", 3)), identities or int(plan.get("closers", 3)))
     if unit == "close" and position > closers:
@@ -211,13 +254,11 @@ def claim_problems(name, record, stem, plan, units, round_dir):
             if not filled(round_dir, f"close-{earlier}", holders_of(round_dir, f"close-{earlier}")):
                 found.append(f"{name}: {slot} opens only once close-1 to close-{position - 1} have merges")
                 break
-    try:
-        created = datetime.datetime.fromisoformat(str(record.get("created_at")))
-        now = datetime.datetime.now(datetime.timezone.utc)
-        if created > now + CLOCK_SKEW:
-            found.append(f"{name}: created_at is ahead of the verifier's clock")
-    except ValueError:
+    created, now = timestamp(record.get("created_at")), datetime.datetime.now(datetime.timezone.utc)
+    if created is None:
         return found + [f"{name}: created_at is not an RFC 3339 time"]
+    if created > now + CLOCK_SKEW:
+        found.append(f"{name}: created_at is ahead of the verifier's clock")
     identity = record.get("identity")
     if (round_dir / "claims" / f"{stem}.yaml").exists():
         found.append(f"{name}: {slot} attempt {attempt} is already claimed")
