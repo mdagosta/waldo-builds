@@ -4,7 +4,7 @@ Stateless verifier for record pull requests from `waldo model join`.
 
 Merges a pull request only if it adds nothing but signed records under an existing run's rounds/,
 each record matches the file it is in, and its signature verifies against the run plan's key.
-Claims reserve a slot before work: a slot's next attempt only once the last one expired unfilled,
+Every record pins the plan it was made under by plan_sha256. Claims reserve a slot before work: a slot's next attempt only once the last one expired unfilled,
 one slot per identity per unit, never dated ahead of this verifier's clock. Submissions and merges
 are merged only from identities holding a claim for them on main.
 It reads the PR's files as data and never runs its code. Pull requests touching anything else
@@ -13,6 +13,7 @@ It reads the PR's files as data and never runs its code. Pull requests touching 
 Usage: verify_records.py <pull request number>   (GH_TOKEN and GITHUB_REPOSITORY set, run from main)
 """
 import datetime
+import hashlib
 import json
 import os
 import pathlib
@@ -146,6 +147,9 @@ def problems(number, repository):
         if record.get("run") != plan["name"] or record.get("round") != number_in_path or number_in_path >= rounds:
             found.append(f"{name}: run or round does not match its path and plan")
             continue
+        # Records count only under the exact plan they were made under.
+        if record.get("plan_sha256") != hashlib.sha256(plan_path.read_bytes()).hexdigest():
+            found.append(f"{name}: plan_sha256 is not the sha256 of {plan_path} on main")
         if record.get("kind") != KINDS[kind] or record.get("schema") != 1 or record.get("stage") != stage_of(plan, number_in_path):
             found.append(f"{name}: kind, schema, or stage is not {KINDS[kind]}, 1, {stage_of(plan, number_in_path)}")
         if kind == "claims":
